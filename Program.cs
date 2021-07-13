@@ -2,7 +2,6 @@
 
 namespace ClasseRandom
 {
-    //Teste merge
     class Program
     {
         static void Main(string[] args)
