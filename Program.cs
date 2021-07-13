@@ -3,7 +3,7 @@
 namespace ClasseRandom
 {
     class Program
-    {
+    {//Test push branch main only
         static void Main(string[] args)
         {
             int InputNumber;
