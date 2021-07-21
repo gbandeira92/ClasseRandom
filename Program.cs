@@ -3,73 +3,83 @@
 namespace ClasseRandom
 {
     class Program
-    {//Test push branch main only
+    {
         static void Main(string[] args)
         {
-            int InputNumber;
-            int RolledNumber;
-            bool RestartProcess = true;
-            while (RestartProcess == true)
+            int inputNumber, rolledNumber;
+            bool restartProcess = true;
+            while (restartProcess)
             {
-                bool InvalidInput = true;
+                bool invalidInput = true;
                 Write("Write a number from 1 to 100 to define a range: ");
-                InputNumber = int.Parse(ReadLine());
+                inputNumber = int.Parse(ReadLine());
                 
-                if (InputNumber > 0 && InputNumber < 101)
+                if (inputNumber > 0 && inputNumber < 101)
                 {
-                    Random rd = new Random();
-                    RolledNumber = rd.Next(1, InputNumber);
-                    if (RolledNumber % 2 == 0)
-                    {
-                        WriteLine($"The Rolled number is {RolledNumber} and it is Odd!");
-                    }
-                    else
-                    {
-                        WriteLine($"The Rolled number is {RolledNumber} and it is Even!");
-                    }
-                    RestartProcess = false;
+                    AllowedNumber(inputNumber, out rolledNumber);
+                    restartProcess = false;
                 }
                 else
                 {
                     WriteLine("Number out of Range, please insert a valid number between 1 to 100!");
-                    while (InvalidInput == true)
-                    {
-                        Write("Do you want to try again? [s/n]: ");
-                        {
-                            string TryAgain = ReadLine().ToString();
-                            if (TryAgain == "S" || TryAgain == "s")
-                            {
-                                WriteLine("");
-                                InvalidInput = false;
-                            }
-                            else if (TryAgain == "N" || TryAgain == "n")
-                            {
-                                WriteLine("");
-                                InvalidInput = false;
-                                RestartProcess = false;
-                                WriteLine("Finished process");
-                            }
-                            else
-                            {
-                                WriteLine("");
-                                WriteLine("Invalid handwriting, please insert a valid one!");
-                            }
-                        }
-                    }
+                    BlockedNumber(ref restartProcess, ref invalidInput);
                 }
 
             }
-            WriteLine("Thanks for participation");
+            WriteLine("Thank you for participation");
         }
-        static void WriteLine(string text)
+
+        private static void AllowedNumber(int inputNumber, out int rolledNumber)
+        {
+            Random rd = new Random();
+            rolledNumber = rd.Next(1, inputNumber);
+            if (rolledNumber % 2 == 0)
+            {
+                WriteLine($"The Rolled number is {rolledNumber} and it is Odd!");
+            }
+            else
+            {
+                WriteLine($"The Rolled number is {rolledNumber} and it is Even!");
+            }
+            
+        }
+        private static void BlockedNumber(ref bool restartProcess, ref bool invalidInput)
+        {
+            while (invalidInput)
+            {
+                Write("Do you want to try again? [y/n]: ");
+                {
+                    string TryAgain = ReadLine().ToString();
+                    if (TryAgain == "Y" || TryAgain == "y")
+                    {
+                        WriteLine("");
+                        invalidInput = false;
+                    }
+                    else if (TryAgain == "N" || TryAgain == "n")
+                    {
+                        WriteLine("");
+                        invalidInput = false;
+                        restartProcess = false;
+                        WriteLine("Finished process");
+                    }
+                    else
+                    {
+                        WriteLine("");
+                        WriteLine("Invalid handwriting, please insert a valid one!");
+                    }
+                }
+            }
+        }
+
+        private static void WriteLine(string text)
         {
             Console.WriteLine(text);
         }
-        static void Write(string text)
+        private static void Write(string text)
         {
             Console.Write(text);
         }
-        static string ReadLine()
+        private static string ReadLine()
         {
            return Console.ReadLine();
         }
