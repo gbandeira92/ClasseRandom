@@ -7,15 +7,36 @@ namespace ClasseRandom
     {
         static void Main(string[] args)
         {
-            Dice myDice = new Dice();
-            
-            Write("Enter the amount of sides of your dice between 2 and 100: ");
-            myDice.AmountOfSides = GetAmountOfValidSides();
-            WriteLine("");
-            int rolledDice = myDice.RolledDice();
-            RolledDiceOddorEven(rolledDice);
-            
+            Write("How many dices do you want to roll? ");
+
+            int amountTimesRolledDice = ValidationDicesToRoll();
+            List<Dice> dices = new List<Dice>();
+            int index = 0, sumResultRolledDices = 0;
+            while (index < amountTimesRolledDice)
+            {
+                WriteLine("");
+                Write($"{++index} dice-> Enter the amount sides of your dice between 2 and 100: ");
+                dices.Add(new Dice { AmountOfSides = GetAmountOfValidSides() });
+                int myRolledDice = dices[--index].RolledDice();
+                RolledDiceOddorEven(myRolledDice);
+                sumResultRolledDices += myRolledDice;
+                index++;
+            }
+
+            WriteLine($"The sum of {amountTimesRolledDice} Rolled Dices are {sumResultRolledDices}");
             WriteLine("Thank you for participation");
+        }
+        public static int ValidationDicesToRoll()
+        {
+            int validationAmountDices = int.Parse(ReadLine());
+            if (validationAmountDices > 0)
+            {
+                return validationAmountDices;
+            }
+            Console.Clear();
+            WriteLine("Amount out of range!\nPlease insert greather then 0\n");
+            WriteLine("How many dices do you want to roll? ");
+            return ValidationDicesToRoll();
         }
 
         public static int GetAmountOfValidSides()
@@ -36,13 +57,14 @@ namespace ClasseRandom
         {
             if (rolledDice % 2 == 0)
             {
-                WriteLine($"The Rolled number is {rolledDice} and it is Odd!");
+                WriteLine($"The Rolled number is {rolledDice} and it is Odd!\n");
             }
             else
             {
-                WriteLine($"The Rolled number is {rolledDice} and it is Even!");
+                WriteLine($"The Rolled number is {rolledDice} and it is Even!\n");
             }
         }
+
 
         private static void WriteLine(string text)
         {
